@@ -1,20 +1,11 @@
 package com.project.ticketsense.service;
 
-import com.project.ticketsense.config.GeminiProperties;
-import com.project.ticketsense.dto.Content;
-import com.project.ticketsense.dto.GeminiReq;
-import com.project.ticketsense.dto.GeminiResp;
-import com.project.ticketsense.dto.Part;
 import org.springframework.ai.chat.client.ChatClient;
 import org.springframework.stereotype.Service;
 import org.springframework.web.reactive.function.client.WebClient;
 
-import java.util.List;
-
 @Service
 public class AiClient {
-    GeminiProperties properties;
-   WebClient webClient;
 
     private final ChatClient chatClient;
 
