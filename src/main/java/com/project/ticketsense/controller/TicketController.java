@@ -1,20 +1,29 @@
 package com.project.ticketsense.controller;
 
+import com.google.api.client.json.Json;
+import com.project.ticketsense.dto.SearchRequest;
+import com.project.ticketsense.dto.SearchResult;
+import com.project.ticketsense.dto.SimilarTicketProjection;
 import com.project.ticketsense.entity.Ticket;
+import com.project.ticketsense.service.TicketSearchService;
 import com.project.ticketsense.service.TicketService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @RestController
 @RequestMapping("/tickets")
 public class TicketController {
 
     private TicketService ticketService;
+    private TicketSearchService ticketSearchService;
 
-    public TicketController(TicketService ticketService) {
+    public TicketController(TicketService ticketService,TicketSearchService ticketSearchService) {
         this.ticketService = ticketService;
+        this.ticketSearchService=ticketSearchService;
     }
 
     @PostMapping
@@ -46,5 +55,10 @@ public class TicketController {
         return ticketService.deleteTicket(id)
                 ? ResponseEntity.noContent().build()
                 : ResponseEntity.notFound().build();
+    }
+
+    @PostMapping("/search")
+    public SearchResult findSimilarTickets(@RequestBody SearchRequest request) {
+        return ticketSearchService.searchTickets(request.getQuestion());
     }
 }
